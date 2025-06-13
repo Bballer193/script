@@ -1,5 +1,9 @@
 local recoil = "Maverick"
 local next_recoil = {Alibi = "Maverick", Maverick = "Ami", Ami = "Ami2", Ami2 = "Jackoff", Jackoff = "None", None = "Tank",Tank = "Mira", Mira = "Sens" , Sens = "Solar", Solar = "Ash" ,Ash = "P90", P90 = "Zero", Zero = "R4C", R4C = "Pulse", Pulse = "Ela", Ela = "Thorn", Thorn = "Kaid", Kaid = "Buck", Buck = "Ying", Ying = "Echo", Echo = "Thatcher", Thatcher = "Goyo", Goyo = "Hanana", Hanana = "Mozzi", Mozzi = "BlackBeard" , BlackBeard = "Ward" , Ward = "Lion", Lion = "Nomad", Nomad = "Fuze", Fuze = "Smoke", Smoke = "Finka", Finka = "Osa", Osa = "thermite", thermite = "Nokk", Nokk = "Fen", Fen = "Frost", Frost = "Tachanka", Tachanka = "Deimos", Deimos = "Lmg", Lmg = "Cap", Cap = "Skop", Skop = "GlockWithDaSwitch", GlockWithDaSwitch = "Alibi", Alibi = "Maverick" }
+local previous_recoil = {}
+for key, value in pairs(next_recoil) do
+  previous_recoil[value] = key
+end
 local a,b = (function(xx) return xx,xx; end)("        ");
 
 function OnEvent(event, arg)
@@ -7,6 +11,11 @@ function OnEvent(event, arg)
  NoRecoil()
   if event == "MOUSE_BUTTON_PRESSED" and arg == 6 and IsModifierPressed("lctrl") then
     recoil = next_recoil[recoil]
+    Switch_mode()
+    Log()
+  end
+  if event == "MOUSE_BUTTON_PRESSED" and arg == 6 and IsModifierPressed("lshift") then
+    recoil = previous_recoil[recoil]
     Switch_mode()
     Log()
   end
@@ -434,4 +443,4 @@ function NoRecoil()
       end
     until not IsMouseButtonPressed(3)
   end
-end  
+end
